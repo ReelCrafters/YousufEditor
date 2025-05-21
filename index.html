@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yousuf | Professional Video Editor Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #FF4D4D;
+            --secondary-color: #7209B7;
+            --dark-bg: #121212;
+            --darker-bg: #0A0A0A;
+            --light-text: #F5F5F5;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            overflow-x: hidden;
+        }
+        
+        .section {
+            padding: 5rem 1rem;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #FF4D4D, #F9A826);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .card {
+            background-color: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-container {
+            position: relative;
+            padding-bottom: 177.77%; /* 16:9 ratio for vertical shorts */
+            height: 0;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
+        }
+        
+        .client-img {
+            transition: transform 0.3s;
+            filter: grayscale(30%);
+        }
+        
+        .client-img:hover {
+            transform: scale(1.05);
+            filter: grayscale(0%);
+        }
+        
+        .service-icon {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #FF4D4D, #F9A826);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 77, 77, 0.4);
+        }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Animation for elements */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Progress bar for videos */
+        .progress-bar {
+            height: 3px;
+            background: linear-gradient(90deg, #FF4D4D, #F9A826);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--darker-bg);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .section {
+                padding: 3rem 1rem;
+            }
+        }
+        
+        /* Ensure content flows well for PDF export */
+        @media print {
+            .section {
+                page-break-inside: avoid;
+                padding: 20px 0;
+            }
+            
+            body {
+                background-color: white;
+                color: black;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid #eee;
+            }
+        }
+        
+        /* Video play button overlay */
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .video-card:hover .video-overlay {
+            opacity: 1;
+        }
+        
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255,77,77,0.8);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .play-btn i {
+            color: white;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-black bg-opacity-90 px-6 py-4 fixed w-full z-50 top-0">
+        <div class="container mx-auto flex items-center justify-between">
+            <a href="#" class="text-2xl font-bold gradient-text">YOUSUF</a>
+            
+            <!-- Desktop Navigation -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="text-white hover:text-red-400 transition">About</a>
+                <a href="#portfolio" class="text-white hover:text-red-400 transition">Portfolio</a>
+                <a href="#clients" class="text-white hover:text-red-400 transition">Clients</a>
+                <a href="#services" class="text-white hover:text-red-400 transition">Services</a>
+                <a href="#contact" class="text-white hover:text-red-400 transition">Contact</a>
+            </div>
+            
+            <!-- Mobile Navigation Toggle (Simplified for PDF compatibility) -->
+            <div class="md:hidden flex items-center">
+                <span class="text-white text-sm">Menu</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="min-h-screen flex items-center justify-center bg-cover bg-center relative" style="background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://i.postimg.cc/RVcm6jWn/IMG-20250501-201108-1.jpg');">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black opacity-90"></div>
+        <div class="container mx-auto px-6 relative z-10 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                <span class="gradient-text">YOUSUF</span>
+            </h1>
+            <p class="text-2xl md:text-3xl text-gray-300 mb-8">Professional Video Editor</p>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-12 text-gray-400">Crafting compelling visual stories that captivate audiences and drive results</p>
+            <div class="flex flex-col md:flex-row justify-center gap-4">
+                <a href="#portfolio" class="btn-primary px-8 py-3 rounded-full font-medium text-lg">View My Work</a>
+                <a href="#contact" class="bg-transparent border-2 border-white px-8 py-3 rounded-full font-medium text-lg hover:bg-white hover:text-black transition">Get In Touch</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="section bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">About <span class="gradient-text">Me</span></h2>
+                <div class="h-1 w-20 bg-red-500 mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2 fade-in">
+                    <h3 class="text-2xl font-semibold mb-4">Professional <span class="text-red-500">Video Editor</span></h3>
+                    <p class="text-gray-300 mb-6">I'm a passionate video editor with expertise in creating compelling visual content across various industries. My goal is to help businesses and individuals tell their stories through the power of video.</p>
+                    <p class="text-gray-300 mb-6">With a keen eye for detail and a creative approach to storytelling, I transform raw footage into engaging content that resonates with audiences and achieves my clients' objectives.</p>
+                    <p class="text-gray-300">I specialize in creating short-form videos optimized for social media platforms, promotional content, financial explainer videos, and motivational storytelling.</p>
+                    
+                    <div class="mt-8 flex flex-wrap gap-4">
+                        <div class="bg-gray-900 px-4 py-2 rounded-lg">
+                            <span class="block text-sm text-gray-400">Projects</span>
+                            <span class="text-xl font-bold">50+</span>
+                        </div>
+                        <div class="bg-gray-900 px-4 py-2 rounded-lg">
+                            <span class="block text-sm text-gray-400">Clients</span>
+                            <span class="text-xl font-bold">20+</span>
+                        </div>
+                        <div class="bg-gray-900 px-4 py-2 rounded-lg">
+                            <span class="block text-sm text-gray-400">Video Views</span>
+                            <span class="text-xl font-bold">10M+</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 fade-in">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="rounded-lg overflow-hidden">
+                            <img src="https://i.postimg.cc/GmZC8qqf/Astro-T-1.jpg" alt="Video Analytics" class="w-full h-auto transform hover:scale-105 transition">
+                        </div>
+                        <div class="rounded-lg overflow-hidden">
+                            <img src="https://i.postimg.cc/RVcm6jWn/IMG-20250501-201108-1.jpg" alt="Viral Content" class="w-full h-auto transform hover:scale-105 transition">
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-red-500 bg-opacity-20 rounded-lg p-4">
+                        <p class="text-center text-sm"><span class="font-bold">Proven Results:</span> My edited content has reached millions of views across platforms</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="section bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">My <span class="gradient-text">Work</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Check out some of my recent video editing projects for various clients across different industries</p>
+                <div class="h-1 w-20 bg-red-500 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Video 1 -->
+                <div class="card rounded-xl overflow-hidden p-4 fade-in">
+                    <h3 class="font-semibold text-xl mb-3">Meet Glimpse</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/8FVMZpRBoMQ" title="Meet Glimpse" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-400 text-sm">E-commerce promotional video demonstrating a trending product discovery platform</p>
+                    </div>
+                </div>
+                
+                <!-- Video 2 -->
+                <div class="card rounded-xl overflow-hidden p-4 fade-in">
+                    <h3 class="font-semibold text-xl mb-3">ICICI Nifty</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/us7ZsBXWmK8" title="ICICI Nifty" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-400 text-sm">Financial content for ICICI explaining Nifty Oil & Gas ETF investment opportunities</p>
+                    </div>
+                </div>
+                
+                <!-- Video 3 -->
+                <div class="card rounded-xl overflow-hidden p-4 fade-in">
+                    <h3 class="font-semibold text-xl mb-3">Birth Date Analysis</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/yee-UySbxhY" title="Birth Date Analysis" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-400 text-sm">Astrological content explaining personality traits based on birth date patterns</p>
+                    </div>
+                </div>
+                
+                <!-- Video 4 -->
+                <div class="card rounded-xl overflow-hidden p-4 fade-in">
+                    <h3 class="font-semibold text-xl mb-3">Digital Marketing Benefits</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/A7DgddqzEpA" title="Digital Marketing Benefits" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-400 text-sm">Educational content explaining the three main paths in digital marketing careers</p>
+                    </div>
+                </div>
+                
+                <!-- Video 5 -->
+                <div class="card rounded-xl overflow-hidden p-4 fade-in">
+                    <h3 class="font-semibold text-xl mb-3">Grow India</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/6IBbXU_643k" title="Grow India" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-400 text-sm">Business promotional content explaining government tender processes</p>
+                    </div>
+                </div>
+                
+                <!-- Video 6 -->
+                <div class="card rounded-xl overflow-hidden p-4 fade-in">
+                    <h3 class="font-semibold text-xl mb-3">IRS Kuldeep Success Story</h3>
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/ZYeybT3YJHQ" title="IRS Kuldeep Success Story" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                    <div class="mt-4">
+                        <p class="text-gray-400 text-sm">Motivational success story of Kuldeep, who overcame adversity to join the Indian Revenue Service</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Viral Content Proof -->
+            <div class="mt-20">
+                <h3 class="text-3xl font-bold text-center mb-8">Viral Content <span class="gradient-text">Proof</span></h3>
+                <div class="flex flex-col md:flex-row justify-center gap-8">
+                    <div class="card p-4 rounded-xl fade-in">
+                        <img src="https://i.postimg.cc/GmZC8qqf/Astro-T-1.jpg" alt="Viral Content Proof 1" class="rounded-lg w-full h-auto">
+                        <p class="mt-4 text-center font-medium">Astrologistar content with <span class="text-red-500 font-bold">9M+ views</span></p>
+                    </div>
+                    <div class="card p-4 rounded-xl fade-in">
+                        <img src="https://i.postimg.cc/RVcm6jWn/IMG-20250501-201108-1.jpg" alt="Viral Content Proof 2" class="rounded-lg w-full h-auto">
+                        <p class="mt-4 text-center font-medium">The Akash Hasija content with <span class="text-red-500 font-bold">2.1M+ views</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section id="clients" class="section bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">My <span class="gradient-text">Clients</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">I've had the privilege of working with amazing clients from various industries</p>
+                <div class="h-1 w-20 bg-red-500 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Client 1 -->
+                <div class="card rounded-xl p-6 text-center fade-in">
+                    <div class="h-40 flex items-center justify-center mb-4">
+                        <img src="https://i.postimg.cc/fbH5rSMg/461440839-524803583263205-8501985197454323199-n.jpg" alt="The Sigma AJ" class="client-img max-h-full rounded-full w-32 h-32 object-cover">
+                    </div>
+                    <h4 class="font-semibold text-xl">The Sigma AJ</h4>
+                    <p class="text-gray-400 mt-2">Ajay Kumar</p>
+                    <p class="text-sm text-gray-500 mt-2">Business & Motivation Coach</p>
+                    <a href="https://www.instagram.com/thesigmaaj" target="_blank" class="inline-block mt-4 text-red-500 hover:text-red-400">
+                        <i class="fab fa-instagram mr-1"></i> @thesigmaaj
+                    </a>
+                </div>
+                
+                <!-- Client 2 -->
+                <div class="card rounded-xl p-6 text-center fade-in">
+                    <div class="h-40 flex items-center justify-center mb-4">
+                        <img src="https://i.postimg.cc/x1ptsbfp/184561415-521877958944513-2309676124091390309-n.jpg" alt="Kico" class="client-img max-h-full w-32 h-32 object-contain">
+                    </div>
+                    <h4 class="font-semibold text-xl">Kico</h4>
+                    <p class="text-gray-400 mt-2">India's Kitab Copy</p>
+                    <p class="text-sm text-gray-500 mt-2">Educational Platform</p>
+                    <a href="https://www.instagram.com/kico.education" target="_blank" class="inline-block mt-4 text-red-500 hover:text-red-400">
+                        <i class="fab fa-instagram mr-1"></i> @kico.education
+                    </a>
+                </div>
+                
+                <!-- Client 3 -->
+                <div class="card rounded-xl p-6 text-center fade-in">
+                    <div class="h-40 flex items-center justify-center mb-4">
+                        <img src="https://i.postimg.cc/x1q8LgyC/The-Akash-Hasija.jpg" alt="Akash Hasija" class="client-img max-h-full rounded-full w-32 h-32 object-cover">
+                    </div>
+                    <h4 class="font-semibold text-xl">Akash Hasija</h4>
+                    <p class="text-gray-400 mt-2">Entrepreneur & Influencer</p>
+                    <p class="text-sm text-gray-500 mt-2">Digital Content Creator</p>
+                    <a href="https://www.instagram.com/theakashhasija" target="_blank" class="inline-block mt-4 text-red-500 hover:text-red-400">
+                        <i class="fab fa-instagram mr-1"></i> @theakashhasija
+                    </a>
+                </div>
+                
+                <!-- Client 4 -->
+                <div class="card rounded-xl p-6 text-center fade-in">
+                    <div class="h-40 flex items-center justify-center mb-4">
+                        <img src="https://i.postimg.cc/hjZV1hQW/Astrologistar.jpg" alt="Astrologistar" class="client-img max-h-full rounded-full w-32 h-32 object-cover bg-gray-800">
+                    </div>
+                    <h4 class="font-semibold text-xl">Astrologistar</h4>
+                    <p class="text-gray-400 mt-2">Anil Gupta</p>
+                    <p class="text-sm text-gray-500 mt-2">Astrology Content Creator</p>
+                    <a href="https://www.instagram.com/astrologistar" target="_blank" class="inline-block mt-4 text-red-500 hover:text-red-400">
+                        <i class="fab fa-instagram mr-1"></i> @astrologistar
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Testimonials -->
+            <div class="mt-20">
+                <h3 class="text-3xl font-bold text-center mb-12">Client <span class="gradient-text">Testimonials</span></h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="card rounded-xl p-6 fade-in">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-500 text-2xl">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 italic">"Yousuf's video editing skills are exceptional. He took my raw content and transformed it into professional videos that have gone viral multiple times. His understanding of pacing, transitions, and audience engagement is outstanding."</p>
+                        <div class="mt-6 flex items-center">
+                            <img src="https://i.postimg.cc/x1q8LgyC/The-Akash-Hasija.jpg" alt="Akash Hasija" class="w-12 h-12 rounded-full object-cover">
+                            <div class="ml-4">
+                                <h5 class="font-semibold">Akash Hasija</h5>
+                                <p class="text-gray-500 text-sm">Digital Content Creator</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card rounded-xl p-6 fade-in">
+                        <div class="flex items-center mb-4">
+                            <div class="text-yellow-500 text-2xl">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 italic">"Working with Yousuf has been incredible for our educational platform. His ability to take complex topics and present them in an engaging, clear video format has helped us reach a much wider audience. Highly recommended!"</p>
+                        <div class="mt-6 flex items-center">
+                            <div class="w-12 h-12 rounded-full bg-purple-700 flex items-center justify-center">
+                                <span class="font-bold text-white">K</span>
+                            </div>
+                            <div class="ml-4">
+                                <h5 class="font-semibold">Kico Education</h5>
+                                <p class="text-gray-500 text-sm">Educational Platform</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">My <span class="gradient-text">Services</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">I offer a range of video editing services tailored to your specific needs</p>
+                <div class="h-1 w-20 bg-red-500 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="card rounded-xl p-6 text-center fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4">Social Media Shorts</h4>
+                    <p class="text-gray-400">Engaging short-form videos optimized for Instagram, YouTube Shorts, and other social platforms to maximize engagement and reach.</p>
+                    <ul class="mt-4 text-sm text-left text-gray-300">
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Vertical video optimization</span>
+                        </li>
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Trending audio integration</span>
+                        </li>
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Captivating text animations</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="card rounded-xl p-6 text-center fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4">Educational & Financial Content</h4>
+                    <p class="text-gray-400">Clear and engaging videos explaining complex topics, financial products, and educational concepts.</p>
+                    <ul class="mt-4 text-sm text-left text-gray-300">
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Data visualization</span>
+                        </li>
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Explainer animations</span>
+                        </li>
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Professional voice-over integration</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="card rounded-xl p-6 text-center fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4">Promotional Videos</h4>
+                    <p class="text-gray-400">Compelling videos that showcase your products, services, or brand to drive customer action.</p>
+                    <ul class="mt-4 text-sm text-left text-gray-300">
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Product showcases</span>
+                        </li>
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Call-to-action optimization</span>
+                        </li>
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Brand-aligned visual style</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 4 -->
+                <div class="card rounded-xl p-6 text-center fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4">Motivational Content</h4>
+                    <p class="text-gray-400">Inspiring videos that tell powerful stories and connect emotionally with viewers.</p>
+                    <ul class="mt-4 text-sm text-left text-gray-300">
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Emotional storytelling</span>
+                        </li>
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Synchronized music and visuals</span>
+                        </li>
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Impactful visual metaphors</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 5 -->
+                <div class="card rounded-xl p-6 text-center fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4">Visual Effects & Animation</h4>
+                    <p class="text-gray-400">Custom animations, motion graphics, and visual effects to enhance your video content.</p>
+                    <ul class="mt-4 text-sm text-left text-gray-300">
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>2D/3D animations</span>
+                        </li>
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Text animation & kinetic typography</span>
+                        </li>
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Logo animations</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Service 6 -->
+                <div class="card rounded-xl p-6 text-center fade-in">
+                    <div class="service-icon">
+                        <i class="fas fa-film"></i>
+                    </div>
+                    <h4 class="text-xl font-semibold mb-4">Full-Service Production</h4>
+                    <p class="text-gray-400">Complete video production services from concept to final delivery.</p>
+                    <ul class="mt-4 text-sm text-left text-gray-300">
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Script development</span>
+                        </li>
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Storyboarding</span>
+                        </li>
+                        <li class="mb-2 flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Post-production & color grading</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">My <span class="gradient-text">Process</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">How I work with clients to deliver outstanding video content</p>
+                <div class="h-1 w-20 bg-red-500 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Step 1 -->
+                <div class="card rounded-xl p-6 fade-in">
+                    <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-xl font-bold mb-4">1</div>
+                    <h4 class="text-xl font-semibold mb-2">Consultation</h4>
+                    <p class="text-gray-400">We begin with a detailed discussion about your goals, target audience, and content requirements.</p>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="card rounded-xl p-6 fade-in">
+                    <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-xl font-bold mb-4">2</div>
+                    <h4 class="text-xl font-semibold mb-2">Planning & Drafting</h4>
+                    <p class="text-gray-400">I develop a concept and create a draft edit to ensure alignment with your vision.</p>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="card rounded-xl p-6 fade-in">
+                    <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-xl font-bold mb-4">3</div>
+                    <h4 class="text-xl font-semibold mb-2">Production</h4>
+                    <p class="text-gray-400">After approval, I execute the full edit with professional transitions, effects, and optimizations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section bg-gradient-to-b from-gray-900 to-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Get In <span class="gradient-text">Touch</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Ready to create amazing videos? Contact me to discuss your project needs!</p>
+                <div class="h-1 w-20 bg-red-500 mx-auto mt-4"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                    
+                    <div class="flex flex-col space-y-6">
+                        <!-- Email -->
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-red-500 bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-envelope text-red-500"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-400">Email</p>
+                                <a href="mailto:yaasiyts@gmail.com" class="text-white hover:text-red-400 transition">yaasiyts@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <!-- WhatsApp -->
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-red-500 bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fab fa-whatsapp text-red-500"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-400">WhatsApp</p>
+                                <a href="https://wa.me/919693953664" class="text-white hover:text-red-400 transition">+91 9693953664</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Instagram -->
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-red-500 bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fab fa-instagram text-red-500"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-400">Instagram</p>
+                                <a href="https://www.instagram.com/prime_editor_yusuf" target="_blank" class="text-white hover:text-red-400 transition">@prime_editor_yusuf</a>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-4">
+                            <h4 class="font-semibold mb-2">Working Hours</h4>
+                            <p class="text-gray-400">Monday - Saturday: 10:00 AM - 8:00 PM IST</p>
+                            <p class="text-gray-400">Available for urgent requirements on Sundays</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <h3 class="text-2xl font-semibold mb-6">Send Me a Message</h3>
+                    
+                    <div class="card rounded-xl p-6">
+                        <div class="mb-4">
+                            <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Your Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Your Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="subject" class="block text-sm font-medium text-gray-400 mb-1">Subject</label>
+                            <input type="text" id="subject" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block text-sm font-medium text-gray-400 mb-1">Your Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary w-full py-3 rounded-lg font-medium">Send Message</button>
+                    </div>
+                    
+                    <div class="flex justify-center space-x-6 mt-8">
+                        <a href="https://wa.me/919693953664" class="w-12 h-12 bg-green-600 rounded-full flex items-center justify-center transition hover:bg-green-700">
+                            <i class="fab fa-whatsapp text-xl text-white"></i>
+                        </a>
+                        <a href="https://www.instagram.com/prime_editor_yusuf" target="_blank" class="w-12 h-12 bg-pink-600 rounded-full flex items-center justify-center transition hover:bg-pink-700">
+                            <i class="fab fa-instagram text-xl text-white"></i>
+                        </a>
+                        <a href="mailto:yaasiyts@gmail.com" class="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center transition hover:bg-blue-700">
+                            <i class="fas fa-envelope text-xl text-white"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer class="bg-black py-8">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-2xl font-bold mb-4">
+                <span class="gradient-text">YOUSUF</span>
+            </h2>
+            <p class="text-gray-400 mb-6">Professional Video Editor</p>
+            
+            <div class="flex justify-center space-x-6 mb-8">
+                <a href="https://www.instagram.com/prime_editor_yusuf" target="_blank" class="text-gray-400 hover:text-red-500 transition">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+                <a href="https://wa.me/919693953664" class="text-gray-400 hover:text-red-500 transition">
+                    <i class="fab fa-whatsapp text-xl"></i>
+                </a>
+                <a href="mailto:yaasiyts@gmail.com" class="text-gray-400 hover:text-red-500 transition">
+                    <i class="fas fa-envelope text-xl"></i>
+                </a>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-6">
+                <p class="text-gray-500 text-sm">&copy; 2024 Yousuf. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript for animations -->
+    <script src="https://cdn.jsdelivr.net/npm/intersection-observer@0.12.0/intersection-observer.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate elements when they come into view
+            const fadeElems = document.querySelectorAll('.fade-in');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            fadeElems.forEach(elem => {
+                observer.observe(elem);
+            });
+            
+            // Simple form validation
+            const form = document.querySelector('form');
+            if(form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    // In a real implementation, you would send the form data to a server here
+                    alert('Thank you for your message! I will get back to you soon.');
+                });
+            }
+            
+            // Mobile menu toggle (simplified for PDF compatibility)
+            const menuToggle = document.querySelector('.md\\:hidden');
+            if(menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    alert('Menu functionality is limited in this preview. Please view on desktop for full navigation or contact me directly.');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
